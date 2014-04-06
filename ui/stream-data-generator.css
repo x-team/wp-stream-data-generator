@@ -1,0 +1,21 @@
+#generator-form .date-inputs {
+	position: relative;
+	display: inline-block;
+}
+#generator-form .date-inputs .date-remove {
+	display: none;
+	position: absolute;
+	cursor: pointer;
+	top: 0;
+	right: 0;
+	width: 20px;
+	height: 28px;
+	line-height: 28px;
+	font-size: 14px;
+	padding-top: 1px;
+	padding-right: 2px;
+}
+
+#generator-form .date-inputs .date-remove:before {
+	content: '\f158';
+}
