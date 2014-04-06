@@ -82,12 +82,12 @@ class WP_Stream_Data_Generator {
 	/**
 	 * Hold the random blog list list
 	 */
-	 public $blogs = array();
+	public $blogs = array();
 
 	/**
 	 * Hold the random authors list
 	 */
-	 public $authors = array();
+	public $authors = array();
 
 	/**
 	 * Hold the random summary list
@@ -291,10 +291,10 @@ class WP_Stream_Data_Generator {
 			if ( is_multisite() ) {
 				if ( is_network_admin() ) {
 					$rand_blog = array_rand( $this->blogs, 1 );
-					$blog_id = $this->blogs[ $rand_blog ]['blog_id'];
-				 } else {
+					$blog_id   = $this->blogs[ $rand_blog ]['blog_id'];
+				} else {
 					$blog_id = get_current_blog_id();
-				 }
+				}
 			} else {
 				$blog_id = 0;
 			}
@@ -307,7 +307,7 @@ class WP_Stream_Data_Generator {
 			$rand_connector = array_rand( $this->connectors, 1 );
 			$rand_connector = $this->connectors[ $rand_connector ];
 
-			$contexts = $rand_connector::get_context_labels();
+			$contexts     = $rand_connector::get_context_labels();
 			$rand_context = array_rand( $contexts, 1 );
 
 			$actions     = $rand_connector::get_action_labels();

@@ -1,4 +1,4 @@
-/* globals wp_stream_data_generator */
+/* globals wp_stream_data_generator, confirm */
 jQuery(function($){
 
 	var from = $('#wp_stream_data_generator_date_from'),

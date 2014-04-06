@@ -52,7 +52,7 @@ class WP_Stream_Data_Generator_Form {
 				'i18n' => array(
 					'confirm_generate' => __( 'Are you sure you want to permanently create these dummy records? This action can not be undone.', 'stream-data-generator' ),
 				),
-				'gmt_offset' => get_option( 'gmt_offset' )
+				'gmt_offset' => get_option( 'gmt_offset' ),
 			)
 		);
 

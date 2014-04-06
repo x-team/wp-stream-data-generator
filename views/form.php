@@ -7,7 +7,7 @@
 
 		<?php do_action( 'wp_stream_before_generator_form' ) ?>
 
-		<input type="hidden" name="page" value="<?php echo WP_Stream_Data_Generator::GENERATOR_PAGE_SLUG; ?>"/>
+		<input type="hidden" name="page" value="<?php esc_attr_e( WP_Stream_Data_Generator::GENERATOR_PAGE_SLUG ); ?>"/>
 
 		<?php wp_nonce_field( 'stream-data-generator-page', 'stream_data_generator_nonce', false ) ?>
 
