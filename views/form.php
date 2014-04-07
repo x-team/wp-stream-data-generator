@@ -42,7 +42,10 @@
 						<label for="wp_stream_data_generator_entries_per_day"><?php esc_html_e( 'Entries Per Day', 'stream-data-generator' ); ?></label>
 					</th>
 					<td>
-						<input type="text" name="wp_stream_data_generator[entries_per_day]" id="wp_stream_data_generator_entries_per_day" value="10">
+						<?php esc_html_e( 'Between', 'stream-data-generator' ); ?>
+						<input type="text" name="wp_stream_data_generator[entries_per_day_from]" id="wp_stream_data_generator_entries_per_day" value="2" size="4">
+						<?php esc_html_e( 'and', 'stream-data-generator' ); ?>
+						<input type="text" name="wp_stream_data_generator[entries_per_day_to]" id="wp_stream_data_generator_entries_per_day" value="40" size="4">
 						<p class="description"><?php esc_html_e( 'Number of dummy entries generated for each day.', 'stream-data-generator' ); ?></p>
 					</td>
 				</tr>

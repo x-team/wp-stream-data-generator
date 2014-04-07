@@ -248,42 +248,37 @@ class WP_Stream_Data_Generator {
 
 		$errors = false;
 
-		if ( ! isset( $form['date_from'] ) || empty ( $form['date_from'] ) ) {
+		if ( empty ( $form['date_from'] ) || empty ( $form['date_to'] ) ) {
 			self::$messages['wp_stream_data_generator_date_from'] = sprintf(
 				'<div class="error"><p>%s</p></div>',
-				esc_html__( 'The Start Date field was not defined. Please try again.', 'stream-data-generator' )
+				esc_html__( 'The Start Date or End Date was not defined. Please try again.', 'stream-data-generator' )
 			); // xss okay
-			$errors = true;
-		}
-
-		if ( ! isset( $form['date_to'] ) || empty ( $form['date_to'] ) ) {
-			self::$messages['wp_stream_data_generator_date_to'] = sprintf(
-				'<div class="error"><p>%s</p></div>',
-				esc_html__( 'The End Date field was not defined. Please try again.', 'stream-data-generator' )
-			); // xss okay
-			$errors = true;
-		}
-
-		if ( ! isset( $form['entries_per_day'] ) || empty ( $form['entries_per_day'] ) ) {
-			self::$messages['wp_stream_data_generator_entries_per_day'] = sprintf(
-				'<div class="error"><p>%s</p></div>',
-				esc_html__( 'The Entries Per Day field was not defined. Please try again.', 'stream-data-generator' )
-			); // xss okay
-			$errors = true;
-		}
-
-		if ( $errors ) {
 			return false;
 		}
 
-		$this->generate( $form['date_from'], $form['date_to'], $form['entries_per_day'] );
+		$args = array(
+			'date_from'            => $form['date_from'],
+			'date_to'              => $form['date_to'],
+			'entries_per_day_from' => intval( $form['entries_per_day_from'] ),
+			'entries_per_day_to'   => intval( $form['entries_per_day_to'] ),
+		);
+		$this->generate( $args );
 	}
 
-	public function generate( $date_from, $date_to, $entries_per_day ) {
+	public function generate( $args ) {
+		wp_parse_args(
+			$args,
+			array(
+				'date_from'            => '-1 year',
+				'date_to'              => 'today',
+				'entries_per_day_from' => 2,
+				'entries_per_day_to'   => 40,
+			)
+		);
 
-		$i = strtotime( $date_from );
+		$i = strtotime( $args['date_from'] );
 
-		while ( $i < strtotime( $date_to ) ) {
+		while ( $i < strtotime( $args['date_to'] ) ) {
 
 			$rand_author = array_rand( $this->authors, 1 );
 			$rand_author = $this->authors[ $rand_author ]->ID;
@@ -331,7 +326,7 @@ class WP_Stream_Data_Generator {
 
 			WP_Stream_DB::get_instance()->insert( $recordarr );
 
-			$i = $i + ( 86400 / $entries_per_day );
+			$i = $i + ( 86400 / mt_rand( $args['entries_per_day_from'], $args['entries_per_day_to'] ) );
 		}
 		self::$messages['wp_stream_data_generator_date_from'] = sprintf(
 			'<div class="updated"><p>%s</p></div>',
