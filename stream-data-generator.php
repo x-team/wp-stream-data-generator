@@ -57,7 +57,7 @@ class WP_Stream_Data_Generator {
 	 *
 	 * @const string
 	 */
-	const VIEW_CAP = 'view_stream_generator';
+	const VIEW_CAP = 'manage_options'; // was: view_stream_generator
 
 	/**
 	 * Hold Stream Data Generator instance
