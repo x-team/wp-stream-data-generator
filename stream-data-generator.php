@@ -37,7 +37,7 @@ class WP_Stream_Data_Generator {
 	 *
 	 * @const string
 	 */
-	const STREAM_MIN_VERSION = '1.3';
+	const STREAM_MIN_VERSION = '1.4.0';
 
 	/**
 	 * Holds this plugin version
@@ -166,6 +166,7 @@ class WP_Stream_Data_Generator {
 	 * @return void
 	 */
 	public function load() {
+		add_action( 'all_admin_notices', array( __CLASS__, 'admin_notices' ) );
 
 		if ( ! $this->is_dependency_satisfied() ) {
 			return;
@@ -189,13 +190,9 @@ class WP_Stream_Data_Generator {
 		if ( is_network_admin() ) {
 			// Network admin menu
 			add_action( 'network_admin_menu', array( $this, 'register_menu' ), 15 );
-			// Network admin notices
-			add_action( 'network_admin_notices', array( __CLASS__, 'admin_notices' ) );
 		} else {
 			// Admin menu
 			add_action( 'admin_menu', array( $this, 'register_menu' ), 15 );
-			// Admin notices
-			add_action( 'admin_notices', array( __CLASS__, 'admin_notices' ) );
 		}
 	}
 
@@ -283,6 +280,9 @@ class WP_Stream_Data_Generator {
 			$rand_author = array_rand( $this->authors, 1 );
 			$rand_author = $this->authors[ $rand_author ]->ID;
 
+			$author      = get_user_by( 'id', $rand_author );
+			$author_role = isset( $author->roles[0] ) ? $author->roles[0] : null;
+
 			if ( is_multisite() ) {
 				if ( is_network_admin() ) {
 					$rand_blog = array_rand( $this->blogs, 1 );
@@ -312,16 +312,17 @@ class WP_Stream_Data_Generator {
 			$rand_ip = $this->ips[ $rand_ip ];
 
 			$recordarr = array(
-				'blog_id'   => $blog_id,
-				'object_id' => null,
-				'author'    => $rand_author,
-				'created'   => $rand_date,
-				'summary'   => $rand_summary,
-				'parent'    => 0,
-				'connector' => $rand_connector::$name,
-				'contexts'  => array( $rand_context => $rand_action ),
-				'meta'      => array(),
-				'ip'        => $rand_ip,
+				'blog_id'     => $blog_id,
+				'object_id'   => null,
+				'author'      => $rand_author,
+				'author_role' => $author_role,
+				'created'     => $rand_date,
+				'summary'     => $rand_summary,
+				'parent'      => 0,
+				'connector'   => $rand_connector::$name,
+				'contexts'    => array( $rand_context => $rand_action ),
+				'meta'        => array(),
+				'ip'          => $rand_ip,
 			);
 
 			WP_Stream_DB::get_instance()->insert( $recordarr );
