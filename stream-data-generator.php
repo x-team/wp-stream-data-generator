@@ -291,7 +291,7 @@ class WP_Stream_Data_Generator {
 					$blog_id = get_current_blog_id();
 				}
 			} else {
-				$blog_id = 0;
+				$blog_id = 1;
 			}
 
 			$rand_date = date( 'Y-m-d H:i:s', $i );
