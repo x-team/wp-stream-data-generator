@@ -19,4 +19,4 @@ Stream Data Generator generates dummy records to populate your Stream activity l
 ### 0.1.0 ###
 Initial concept built. Props [fjarrett](http://profiles.wordpress.org/fjarrett/)
 
-
+Maintained by the [developers at x-team](https://www.x-team.com) | [developer blog](https://www.x-team.com/blog/)
